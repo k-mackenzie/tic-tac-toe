@@ -9,29 +9,44 @@ class autoPlayer:
     def __init__(self, board, board_positions):
         self.board = board
         self.board_positions = board_positions
-# position = int(input("1-9: "))
+    # position = int(input("1-9: "))
 
-def first_move(self, position):
-    self.position = position
+    def auto_moves(self, position):
+        self.position = position
+        # remove the layers first move from the board positions list
+        self.board_positions.remove(self.position)
 
-    self.board_positions.remove(self.position)
-    # if opponent takes centre, take a corner
-    # if opponent takes a corner, take the centre or a corner
-    best_pos = [1,3,5,7,9]
-    if self.position in best_pos:
-        best_pos.remove(self.position)
+        if "O" not in self.board:
+            # logic for FIRST MOVE
+            # if opponent takes centre, take a corner
+            # if opponent takes a corner, take the centre or a corner
+            best_pos = [1,3,5,7,9]
+            if self.position in best_pos:
+                best_pos.remove(self.position)
 
-        move = random.choice(best_pos)
-        self.board_positions.remove(move)
+            move = random.choice(best_pos)
+            self.board_positions.remove(move)
 
-        move = int(move) - 1
-        self.board[move] = "O"
-    else:
-        move = random.choice(best_pos)
-        self.board_positions.remove(move)
+            move = int(move) - 1
+            self.board[move] = "O"
+            return None
 
-        move = int(move) - 1
-        self.board[move] = "O"
+    def check_row_possible_wins(self):
+        row_1 = self.board[0:3]
+        row_2 = self.board[3:6]
+        row_3 = self.board[6:9]
+        if row_1.count("O") == 2 and row_1.count(" ") == 1:
+            # move should be in the possition that is empty
+            return self.board_positions[0]
+        elif row_2.count("O") == 2 and row_2.count(" ") == 1:
+            # move should be in the possition that is empty
+            for i in range(0, len(self.board_positions)):
+                if self.board_positions[i] > 2 and self.board_positions[i] < 6:
+                    return self.board_positions[i]
+        elif row_2.count("O") == 2 and row_2.count(" ") == 1:
+            # move should be in the possition that is empty
+            return self.board_positions[-1]
+        return
 
 '''
 LOGIC:
