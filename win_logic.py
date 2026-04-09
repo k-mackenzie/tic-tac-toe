@@ -1,69 +1,70 @@
 board =[" "," "," ",
         " "," "," ",
         " "," "," ",]
+
 class win_logic:
 
-    def check_rows():
-        global game_still_going
+    def __init__(self, board):
+        self.board = board
 
-        row_1 = board[0] == board[1] == board[2] != " "
-        row_2 = board[3] == board[4] == board[5] != " "
-        row_3 = board[6] == board[7] == board[8] != " "
 
-        if row_1 or row_2 or row_3:
-            game_still_going = False
+    def check_rows(self):
+        row_1 = self.board[0] == self.board[1] == self.board[2] != " "
+        row_2 = self.board[3] == self.board[4] == self.board[5] != " "
+        row_3 = self.board[6] == self.board[7] == self.board[8] != " "
+
+        # if row_1 or row_2 or row_3:
+        #     return False
 
         if row_1:
-            return board[0]
+            return self.board[0]
         elif row_2:
-            return board[3]
+            return self.board[3]
         elif row_3:
-            return board[6]
+            return self.board[6]
+        return None
 
-    def check_columns():
-        global game_still_going
+    def check_columns(self):
+        column_1 = self.board[0] == self.board[3] == self.board[6] != " "
+        column_2 = self.board[1] == self.board[4] == self.board[7] != " "
+        column_3 = self.board[2] == self.board[5] == self.board[8] != " "
 
-        column_1 = board[0] == board[3] == board[6] != " "
-        column_2 = board[1] == board[4] == board[7] != " "
-        column_3 = board[2] == board[5] == board[8] != " "
-
-        if column_1 or column_2 or column_3:
-            game_still_going = False
+        # if column_1 or column_2 or column_3:
+        #     return False
 
         if column_1:
-            return board[0]
+            return self.board[0]
         elif column_2:
-            return board[1]
+            return self.board[1]
         elif column_3:
-            return board[2]
+            return self.board[2]
+        return None
 
-    def check_diagonals():
-        global game_still_going
+    def check_diagonals(self):
+        diagonal_1 = self.board[0] == self.board[4] == self.board[8] != " "
+        diagonal_2 = self.board[2] == self.board[4] == self.board[6] != " "
 
-        diagonal_1 = board[0] == board[4] == board[8] != " "
-        diagonal_2 = board[2] == board[4] == board[6] != " "
-
-        if diagonal_1 or diagonal_2:
-            game_still_going = False
+        # if diagonal_1 or diagonal_2:
+        #     return False
 
         if diagonal_1:
-            return board[0]
+            return self.board[0]
         elif diagonal_2:
-            return board[2]
-        return
+            return self.board[2]
+        return None
 
-    def check_if_game_over():
-        win_logic.check_if_win()
-        win_logic.check_if_tie()
+    def check_if_game_over(self):
+        winner = self.check_if_win()
+        tie = self.check_if_tie()
+        return winner, tie
 
-    def check_if_win():
-        global winner
+    def check_if_win(self):
         # check rows
-        row_winner = win_logic.check_rows()
+        row_winner = self.check_rows()
         # check columns
-        column_winner = win_logic.check_columns()
+        column_winner = self.check_columns()
         # check diagonals
-        diagonal_winner = win_logic.check_diagonals()
+        diagonal_winner = self.check_diagonals()
         if row_winner:
             winner = row_winner
         elif column_winner:
@@ -72,10 +73,9 @@ class win_logic:
             winner = diagonal_winner
         else:
             winner = None
-        return
+        return winner
 
-    def check_if_tie():
-        global game_still_going
-        if " " not in board:
-            game_still_going = False
-        return
+    def check_if_tie(self):
+        if " " not in self.board:
+            return True
+        return None
