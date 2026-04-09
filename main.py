@@ -29,7 +29,7 @@ def play_game():
         handle_turn(current_player)
 
         # check if the game has ended
-        win_check = win.win_logic(board)
+        win_check = win.winLogic(board)
         winner, tie = win_check.check_if_game_over()
 
         # game has ended:

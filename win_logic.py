@@ -2,7 +2,7 @@ board =[" "," "," ",
         " "," "," ",
         " "," "," ",]
 
-class win_logic:
+class winLogic:
 
     def __init__(self, board):
         self.board = board
